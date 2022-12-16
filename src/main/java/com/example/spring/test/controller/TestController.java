@@ -48,12 +48,33 @@ public class TestController {
      * ex) http://localhost:8080/api/test/path4?path=ab+c
      *
      * @PathVariable은 URI 경로에서 값을 추출하기 때문에 인코딩되지 않지만  @RequestParam은 인코딩됩니다.
+     * Params으로 넣었을때와 body에 넣었을 경우는 다르게 작용된다 .
+     *
      * <p>
      * 따라서 @RequestParam  요청의 경우 매개변수는 URL 디코딩됩니다 .
      */
-    @GetMapping("path3")
+    @GetMapping("path4")
     @ResponseBody
     public String getPath4(@RequestParam String path) {
+        log.info("path : {}", path);
+        return "OK";
+    }
+
+    @PostMapping("path5")
+    @ResponseBody
+    public String getPath5(@RequestParam String path) {
+        log.info("path : {}", path);
+        return "OK";
+    }
+
+    /**
+     * ex) http://localhost:8080/api/test/path5
+     * body에 아무런 값도 넣지 않으면 400에러 발생
+     * body :{path : "ab+c"}
+     */
+    @GetMapping("path6")
+    @ResponseBody
+    public String getPath6(@RequestBody String path) {
         log.info("path : {}", path);
         return "OK";
     }
