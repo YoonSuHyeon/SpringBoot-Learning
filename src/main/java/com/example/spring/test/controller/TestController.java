@@ -1,5 +1,7 @@
 package com.example.spring.test.controller;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -79,5 +81,33 @@ public class TestController {
         return "OK";
     }
 
+    /**
+     * 같이 사용할 수 있다. 하지만 path와 같이 동일하게 사용하게되면 이상한 값이 나올수 있다.
+     * 쿼리스트링으로 path의 값을 넣고 body에 form-data로 넣게 되면 둘이 합쳐져서 나오게된다.
+     * from-data는 인코딩이 되기때문에 사용에 유의해야한다.
+     */
+    @PostMapping("/path7")
+    @ResponseBody
+    public String getPath7(@RequestParam String path, @ModelAttribute Path path2) {
+        log.info("path : {}", path);
+        log.info("path : {}", path2);
+        return "OK";
+    }
+
+    @Data
+    public static class Path {
+        private String path;
+    }
+
+    /**
+     * 쿼리스트링으로 사용하는경우 아래 API 사용 가능
+     */
+    @PostMapping("/path8")
+    @ResponseBody
+    public String getPath8(@RequestParam String path, @RequestBody Path path2) {
+        log.info("path : {}", path);
+        log.info("path : {}", path2);
+        return "OK";
+    }
 
 }
